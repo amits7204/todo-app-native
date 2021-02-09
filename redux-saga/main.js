@@ -1,13 +1,16 @@
-import {createStore, applyMiddleware} from 'redux'
-import createSagaMiddleware from 'redux-saga'
+import { put, takeEvery } from 'redux-saga/effects'
 
-import {helloSaga} from './saga'
+const delay = (ms) => new Promise(res => setTimeout(res, ms))
 
-const sagaMiddleware = createSagaMiddleware()
-const store = createStore(
-    reducer,
-    applyMiddleware(sagaMiddleware)
-)
-sagaMiddleware.run(helloSaga)
+// ...
 
-const action = type => store.dispatch({type})
+// Our worker Saga: will perform the async increment task
+export function* addToTaskAsync() {
+  // yield delay(1000)
+  yield put({ type: 'ADD_TO_TASK' })
+}
+
+// Our watcher Saga: spawn a new incrementAsync task on each INCREMENT_ASYNC
+export function* watchAddToTaskAsync() {
+  yield takeEvery('INCREMENT_ASYNC', addToTaskAsync)
+}

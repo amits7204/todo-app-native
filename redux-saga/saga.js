@@ -1,3 +1,7 @@
-export default function* helloSaga(){
-    console.log("hello saga")
-}     
+ import {take,call,all} from "redux-saga/effects"
+
+import { watchAddToTaskAsync } from './main';
+
+export default function* RootSaga(){
+    yield all([watchAddToTaskAsync()])
+}
