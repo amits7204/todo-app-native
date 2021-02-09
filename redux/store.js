@@ -7,9 +7,9 @@ const RootReducer = combineReducers({Reducer})
 
 const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(RootReducer);
+const store = createStore(RootReducer, applyMiddleware(sagaMiddleware))
 
-// sagaMiddleware.run(ReduxSaga)
+sagaMiddleware.run(ReduxSaga)
 console.log("saga: S", store.getState())
 
 export default store

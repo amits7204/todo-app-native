@@ -1,7 +1,7 @@
 import {ADD_TO_TASK, DELETE_TO_TASK} from './actionType'
 
 const initialState = {
-    task: ''
+    task: []
 }
 
 const reducer = (state=initialState, {type, payload})=>{

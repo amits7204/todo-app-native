@@ -5,15 +5,18 @@ import {addToTask} from '../redux/actionCreator'
 
 export default function InputTask(){
     const [task, setTask] = useState('')
-    // const [save, setSave] = useState([])
+    const [save, setSave] = useState([])
     const dispatch = useDispatch();
-    
-    const handleOnSubmit=()=>{
-        // setSave([...save, task])
-        dispatch(addToTask(task))
-    }
-    const getTask = useSelector((state)=>state.Reducer.state.task)
+
+    const getTask = useSelector((state)=>state.Reducer.task)
     console.log("Amit Task: ",getTask)
+
+    const handleOnSubmit=()=>{
+        setSave([...save, task])
+        
+        dispatch(addToTask(save))
+    }
+    
 
     const handleOnChange = (text) =>{
         // console.log("text", text)
@@ -27,9 +30,9 @@ export default function InputTask(){
         onChangeText={handleOnChange}
         defaultValue={task}/>
         <Button title="Add" onPress={handleOnSubmit}/>
-        <Text>{getTask}</Text>
-        {/* {save?.map(item=> */}
-            
-        {/* )} */}
+        
+        {save?.map(item=> 
+            <Text key={item}>{item}</Text>
+         )}
     </View>)
 }
