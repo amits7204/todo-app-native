@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useMemo} from 'react'
 import {SafeAreaView, TextInput, FlatList, View, Text, AsyncStorage, StyleSheet} from 'react-native'
-import {Button} from 'react-native-paper'
+import {Button, IconButton} from 'react-native-paper'
 import Item from './Item'
 var uuid = require('react-native-uuid');
 export default class InputTask extends React.Component{
@@ -25,6 +25,8 @@ export default class InputTask extends React.Component{
 
     onSelected = (item) =>{
         console.log("ITEM: ", item)
+        let filteredArray = this.state.item.filter(task => task !== item)
+        this.setState({item: filteredArray});
     }
 
     renderItem = ({item})=>{
@@ -43,18 +45,19 @@ export default class InputTask extends React.Component{
         return(
         <SafeAreaView style={styles.contain}>
             <Text style={styles.headerText}>Today's Task</Text>
+            <FlatList 
+                data={this.state.item}
+                renderItem={this.state.item[0].id===""?'':this.renderItem}
+                keyExtractor={item => item.id}
+                style={styles.listContainer}
+            />
             <View style={styles.container}>
                 <TextInput style={styles.inputTask}
                 placeholder="Enter a task"
                 onChangeText={text => this.setState({text})}
                 value={this.state.text}/>
-                <Button mode='contained' style={styles.taskButton} onPress={this.handleOnSubmit}>Add</Button>
+                <IconButton size={25} color='#D0D9E1' icon='send' style={styles.taskButton} onPress={this.handleOnSubmit} />
             </View>
-            <FlatList 
-                data={this.state.item}
-                renderItem={this.state.item[0].id===""?'':this.renderItem}
-                keyExtractor={item => item.id}
-            />
         </SafeAreaView>)
     }   
 }
@@ -62,28 +65,25 @@ export default class InputTask extends React.Component{
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
-        marginBottom: '40%',
+        marginBottom: '8%',
         flexWrap: 'wrap',
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        top: 120,
+        justifyContent: 'center',
+        alignItems: 'center',
+        top: 20,
     },
     inputTask: {
         height: 40,
-        width: 200,
+        width: 250,
         paddingLeft: 10,
         borderColor: '#1C395F',
         borderRadius: 16,
         borderWidth: 1
     }, 
     taskButton: {
-        height: 40,
-        width: 90,
-        borderRadius: 16,
+        borderRadius: 50,
         backgroundColor: '#1C395F',
-        color: '#f6f6f6',
-        fontWeight: 'bold',
-        textTransform: 'none'
+        
     },
     headerText:{
         fontSize: 24,
@@ -96,5 +96,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#D0D9E1',
         width: '100%',
         height: '100%'
+    },
+    listContainer: {
+        marginTop: 100
     }
 })
