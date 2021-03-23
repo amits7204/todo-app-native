@@ -23,18 +23,12 @@ export default class InputTask extends React.Component{
         console.log('DATA: ', this.state.item);
     }
 
-    onSelected = (item) =>{
-        console.log("ITEM: ", item)
-        let filteredArray = this.state.item.filter(task => task !== item)
-        this.setState({item: filteredArray});
-    }
 
     renderItem = ({item})=>{
         console.log("renderItem: ", item.task)
         return(
             <Item
                 item = {item}
-                onPress={()=>this.onSelected(item)}
                 style={{backgroundColor: "#1C395F"}}
             />
         )

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 import {Checkbox, IconButton, Colors} from 'react-native-paper'
 
-export default function Item({ item, onPress, style }){
+export default function Item({ item, style }){
     console.log("ITEM: ",item)
     const [checked, setChecked] = useState(false);
     return(
@@ -14,7 +14,7 @@ export default function Item({ item, onPress, style }){
                 }}
             />
             <Text key={item.id} style={!checked?styles.taskItem:styles.completeTask}>{item.task}</Text>
-            <IconButton icon='delete' size={25} color={Colors.red300} onPress={onPress}/>
+            {/* <IconButton icon='delete' size={25} color={Colors.red300} onPress={onPress}/> */}
         </View>
     )
 }
